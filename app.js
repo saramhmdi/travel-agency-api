@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
