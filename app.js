@@ -1,18 +1,17 @@
-// api/index.js
-
 import express from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger/swagger.json';
+import fs from 'fs';
 import path from 'path';
 
 const app = express();
 
+const swaggerDocument = JSON.parse(fs.readFileSync(path.resolve(__dirname, './swagger/swagger.json'), 'utf-8'));
+
 app.use(cors());
 app.use(express.json());
-
 app.use('/static', express.static(path.join(__dirname, 'public')));
-
+app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
